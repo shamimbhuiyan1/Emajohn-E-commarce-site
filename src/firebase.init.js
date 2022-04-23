@@ -17,5 +17,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+//ekhane amra getAuth declare korbo
 const auth = getAuth(app);
 export default auth;
