@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import "./Login.css";
 const Login = () => {
@@ -8,8 +8,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-
+  //navigation er maddome amra kothai user k nite cai.
   const navigate = useNavigate();
+  const location = useLocation();
+  //kotha jabe navigate kre er pathname
+  const from = location?.state?.from?.pathname || "/";
   //email setting
   const handleEmailBlur = (e) => {
     setEmail(e.target.value);
@@ -18,7 +21,12 @@ const Login = () => {
   const handlePasswordBlur = (e) => {
     setPassword(e.target.value);
   };
+  //location code
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
+  //navigate code
   if (user) {
     navigate("/shop");
   }
