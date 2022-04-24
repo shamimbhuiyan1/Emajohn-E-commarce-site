@@ -1,7 +1,11 @@
 import { useState } from "react";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const Shipment = () => {
+  //ekhne useAuthState use kre amra user login krar por 2nd time jate email na deya lage  se jonno eti korbo ebong niche er apply hoiche
+  const [user] = useAuthState(auth);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -11,9 +15,6 @@ const Shipment = () => {
 
   const handleNameBlur = (e) => {
     setName(e.target.value);
-  };
-  const handleEmailBlur = (e) => {
-    setEmail(e.target.value);
   };
 
   const handleAddressBlur = (e) => {
@@ -25,6 +26,8 @@ const Shipment = () => {
   };
   const handleCreateUser = (e) => {
     e.preventDefault();
+    const shipping = { name, email, address, phone };
+    console.log(shipping);
   };
   return (
     <div className="form-container">
@@ -44,7 +47,8 @@ const Shipment = () => {
           <div className="input-group">
             <label htmlFor="email">Your Email</label>
             <input
-              onBlur={handleEmailBlur}
+              value={user?.email}
+              readOnly
               type="email"
               name="email"
               id=""
