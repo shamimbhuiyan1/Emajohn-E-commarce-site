@@ -47,8 +47,8 @@ const Orders = () => {
 
           {/* amra simple button hishbe o call korte pari link use na kre */}
 
-          <button onClick={() => navigate("/inventory")}>
-            Proceed Checkout
+          <button onClick={() => navigate("/shipment")}>
+            Proceed Shipping
           </button>
         </Cart>
       </div>
