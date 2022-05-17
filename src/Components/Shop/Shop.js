@@ -6,13 +6,19 @@ import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
 const Shop = () => {
+  //page size orthath option gulo jonno state
+  const [size, setSize] = useState(10);
+
+  //set page that means currently kon page achi
+  const [page, setPage] = useState(0);
+
   /* [ekhane amader nijerder banano hook use kortechi useProducts name die] */
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/product?page=${page}&size${size}`)
+    fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, []);
+  }, [page, size]);
 
   /* useState([]); */
   /* useEffect(() => {
@@ -31,12 +37,6 @@ const Shop = () => {
         setPageCount(pages);
       });
   }, []);
-
-  //page size orthath option gulo jonno state
-  const [size, setSize] = useState(10);
-
-  //set page that means currently kon page achi
-  const [page, setPage] = useState(0);
 
   // local storage part
 
