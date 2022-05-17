@@ -22,7 +22,7 @@ const Shop = () => {
     const storedCart = getStoredCart();
     const savedCart = [];
     for (const id in storedCart) {
-      const addedProduct = products.find((product) => product.id === id);
+      const addedProduct = products.find((product) => product._id === id);
       if (addedProduct) {
         const quantity = storedCart[id];
         addedProduct.quantity = quantity;
@@ -38,7 +38,7 @@ const Shop = () => {
     const storedCart = getStoredCart();
     const savedCart = [];
     for (const id in storedCart) {
-      const addedProduct = products.find((product) => product.id === id);
+      const addedProduct = products.find((product) => product._id === id);
       if (addedProduct) {
         const quantity = storedCart[id];
         addedProduct.quantity = quantity;
@@ -52,12 +52,14 @@ const Shop = () => {
     console.log(selectedProduct);
     let newCart = [];
     // array er modde cart add korar way
-    const exists = cart.find((product) => product.id === selectedProduct.id);
+    const exists = cart.find((product) => product._id === selectedProduct._id);
     if (!exists) {
       selectedProduct.quantity = 1;
       newCart = [...cart, selectedProduct];
     } else {
-      const rest = cart.filter((product) => product.id !== selectedProduct.id);
+      const rest = cart.filter(
+        (product) => product._id !== selectedProduct._id
+      );
       exists.quantity = exists.quantity + 1;
       newCart = [...rest, exists];
     }
@@ -65,7 +67,7 @@ const Shop = () => {
 
     // local storage data save kore rakhar jonno fakedb k call korchi
 
-    addToDb(selectedProduct.id);
+    addToDb(selectedProduct._id);
   };
   return (
     <div className="shop-container">

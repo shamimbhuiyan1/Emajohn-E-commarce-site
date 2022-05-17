@@ -15,12 +15,12 @@ const Orders = () => {
    */
 
   const handleRemoveProduct = (product) => {
-    const rest = cart.filter((pd) => pd.id !== product.id);
+    const rest = cart.filter((pd) => pd._id !== product._id);
     setCart(rest);
 
     /* local storage theke delete kora hoiche niche state call kre hoiche fakebd components theke */
 
-    removeFromDb(product.id);
+    removeFromDb(product._id);
   };
 
   /* button er maddome amra react navigate dara ek jaiga theke onno jaiga  te jete pari function declare kre */
@@ -31,7 +31,7 @@ const Orders = () => {
       <div className="review-items-container">
         {cart.map((product) => (
           <ReviewItem
-            key={product.id}
+            key={product._id}
             product={product}
             handleRemoveProduct={handleRemoveProduct}
           ></ReviewItem>

@@ -16,5 +16,5 @@ const items = [
   { id: "j555", name: "juice" },
 ];
 
-const item = items.filter((item) => item.id != "j555");
+const item = items.filter((item) => item._id != "j555");
 console.log(item);
