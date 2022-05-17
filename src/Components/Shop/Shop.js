@@ -7,6 +7,12 @@ import Product from "../Product/Product";
 import "./Shop.css";
 const Shop = () => {
   /* [ekhane amader nijerder banano hook use kortechi useProducts name die] */
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    fetch(`http://localhost:5000/product?page=${page}&size${size}`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
 
   /* useState([]); */
   /* useEffect(() => {
@@ -26,8 +32,14 @@ const Shop = () => {
       });
   }, []);
 
+  //page size orthath option gulo jonno state
+  const [size, setSize] = useState(10);
+
+  //set page that means currently kon page achi
+  const [page, setPage] = useState(0);
+
   // local storage part
-  const [products, setProducts] = useProducts();
+
   useEffect(() => {
     const storedCart = getStoredCart();
     const savedCart = [];
@@ -89,6 +101,26 @@ const Shop = () => {
             handleAddToCart={handleAddToCart}
           ></Product>
         ))}
+
+        {/* pagination set korar hard code */}
+        <div className="pagination">
+          {[...Array(pageCount).keys()].map((number) => (
+            <button
+              className={page === number ? "selected" : ""}
+              onClick={() => setPage(number)}
+            >
+              {number + 1}
+            </button>
+          ))}
+          <select onChange={(e) => setSize(e.target.value)}>
+            <option value="5">5</option>
+            <option value="10" selected>
+              10
+            </option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
       </div>
       <div className="cart-container">
         <Cart cart={cart}>
