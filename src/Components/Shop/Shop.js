@@ -6,8 +6,6 @@ import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
 const Shop = () => {
-  const [products, setProducts] = useProducts();
-
   /* [ekhane amader nijerder banano hook use kortechi useProducts name die] */
 
   /* useState([]); */
@@ -16,8 +14,20 @@ const Shop = () => {
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []); */
+  //product page count
+  const [pageCount, setPageCount] = useState(0);
+  useEffect(() => {
+    fetch("http://localhost:5000/productCount")
+      .then((res) => res.json())
+      .then((data) => {
+        const count = data.count;
+        const pages = Math.ceil(count / 10);
+        setPageCount(pages);
+      });
+  }, []);
 
   // local storage part
+  const [products, setProducts] = useProducts();
   useEffect(() => {
     const storedCart = getStoredCart();
     const savedCart = [];
