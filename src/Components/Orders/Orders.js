@@ -9,7 +9,7 @@ import "./Orders.css";
 
 const Orders = () => {
   const [products, setProducts] = useProducts();
-  const [cart, setCart] = useCart(products);
+  const [cart, setCart] = useCart();
 
   /*   ekhane order er delete button declare kra hoiche sob amra jekhane cart state declare korbo shekhane btn event handler dibo.
    */
