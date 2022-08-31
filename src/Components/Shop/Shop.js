@@ -232,6 +232,7 @@ export default Shop; */
 
 //raw code video between 48-49
 import React, { useEffect, useState } from "react";
+import { addToDb } from "../../utilities/fakedb";
 import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
@@ -250,6 +251,8 @@ const Shop = () => {
     const newCart = [...cart, product];
     setCart(newCart);
     console.log(newCart);
+    //add to local storage database
+    addToDb(product.id);
   };
 
   return (
