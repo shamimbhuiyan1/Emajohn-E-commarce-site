@@ -250,11 +250,12 @@ const Shop = () => {
   //for permanetly store data in local storage using this way
 
   useEffect(() => {
+    //calling getStoredCart from fake db
     const storedCart = getStoredCart();
     // console.log(storedCart);
     const savedCart = [];
 
-    //r jeheto cart er data object er modde ahe se jonno object er for loop use korbo
+    //r jeheto cart er data object er modde ace se jonno object er for-in loop use korbo
     for (const id in storedCart) {
       const addedProductInCart = products.find((product) => product.id === id);
       if (addedProductInCart) {
@@ -267,13 +268,28 @@ const Shop = () => {
     //niche amra dependency 'products' dichi karon eta jodi na ditam tahole eti shodo 1bar check korto ,ekhon amra jtobar cart er value change hbe etio change hbe
   }, [products]);
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = (selectedProduct) => {
     //console.log(product);
-    const newCart = [...cart, product];
+    //cart added ache kina dekha, ei code na dile cart er nuton product er quantity initialy 0 dekhai reload die dekhte hoi
+
+    let newCart = [];
+    const exists = cart.find((product) => product.id === selectedProduct.id);
+    if (!exists) {
+      selectedProduct.quantity = 1;
+      newCart = [...cart, selectedProduct];
+    } else {
+      const rest = cart.filter((product) => product.id !== selectedProduct.id);
+      exists.quantity = exists.quantity + 1;
+      newCart = [...rest, exists];
+    }
+
+    //jokhon upore exist variable declare korbo tokhon noton kre  newCart declare korbo  r eta nicher  newCart code cmnt korbo.
+
+    /* const newCart = [...cart, selectedProduct];*/
     setCart(newCart);
-    console.log(newCart);
+    // console.log(newCart);
     //add to local storage database ekhne amra product.id die db ke call korbo.
-    addToDb(product.id);
+    addToDb(selectedProduct.id);
   };
 
   return (
