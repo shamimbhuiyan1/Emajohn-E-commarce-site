@@ -230,9 +230,9 @@ const Shop = () => {
 
 export default Shop; */
 
-//raw code video between 48-49
+//raw code video between module no - 48-49
 import React, { useEffect, useState } from "react";
-import { addToDb } from "../../utilities/fakedb";
+import { addToDb, getStoredCart } from "../../utilities/fakedb";
 import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
@@ -246,12 +246,33 @@ const Shop = () => {
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
+
+  //for permanetly store data in local storage using this way
+
+  useEffect(() => {
+    const storedCart = getStoredCart();
+    // console.log(storedCart);
+    const savedCart = [];
+
+    //r jeheto cart er data object er modde ahe se jonno object er for loop use korbo
+    for (const id in storedCart) {
+      const addedProductInCart = products.find((product) => product.id === id);
+      if (addedProductInCart) {
+        const quantity = storedCart[id];
+        addedProductInCart.quantity = quantity;
+        savedCart.push(addedProductInCart);
+      }
+    }
+    setCart(savedCart);
+    //niche amra dependency 'products' dichi karon eta jodi na ditam tahole eti shodo 1bar check korto ,ekhon amra jtobar cart er value change hbe etio change hbe
+  }, [products]);
+
   const handleAddToCart = (product) => {
     //console.log(product);
     const newCart = [...cart, product];
     setCart(newCart);
     console.log(newCart);
-    //add to local storage database
+    //add to local storage database ekhne amra product.id die db ke call korbo.
     addToDb(product.id);
   };
 
